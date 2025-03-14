@@ -11,8 +11,10 @@
     <!-- Toggle button  -->
     <button onclick="toggleTheme()" id="mode"></button>
 
-    <h1>Welcome to the Background Music Website</h1>
-    <p>🤩🥳Enjoy music while browsering the content !! 🥳🤩</p>
+    <h1>Welcome to the Background Music Website 🎵🎵</h1>
+    <p>
+        <span>🤩</span> <span>🥳</span> Enjoy music while browsing the content!! <span>🥳</span> <span>🤩</span>
+    </p>
     <p id="notification">Click anywhere on the page to enable music if it does not autoplay.</p>
 
     <!-- Options for selecting the songs -->
@@ -34,6 +36,12 @@
         <input type="range" id="volume" min="0" max="1"  step=0.1 onchange="setVolume(this.value)">
     </div>
 
+    <div class="music-visualizer">
+        <div class="headphone-container" id="visualizer">
+            <span class="headphone">🎧</span>
+        </div>
+    </div>
+    
     <script>
         const audio = document.getElementById("bgMusic");
         const notification = document.getElementById("notification");
@@ -79,24 +87,22 @@
         }
 
         // Toggle theme
-        function toggleTheme() {
+        function toggleTheme() 
+        {
             const body = document.getElementById("body");
             let currentMode = localStorage.getItem("theme") || "light";
 
-            if (currentMode === "light")
-            {
-                body.style.backgroundColor = "#12172b"; 
-                // body.style.backgroundColor = "black";  
+            if (currentMode === "light") {
+                body.style.backgroundColor = "#12172b";  
                 body.style.color = "white";
-                modeBtn.innerHTML="🌞";
+                modeBtn.innerHTML = "🌞";
                 localStorage.setItem("theme", "dark");
             } 
             else 
             {
-                body.style.backgroundColor = "#ffe5b4"; 
-                // body.style.backgroundColor = "white"; 
-                body.style.color = "black";
-                modeBtn.innerHTML="🌙";
+                body.style.backgroundColor = "#e3f2fd";  
+                body.style.color = "#1e3a8a";  
+                modeBtn.innerHTML = "🌙";
                 localStorage.setItem("theme", "light");
             }
         }
@@ -104,36 +110,29 @@
         // this function will saved the theme which was apply last time
         window.onload = function() 
         {
-            const savedTheme = localStorage.getItem("theme");
+            const savedTheme = localStorage.getItem("theme") || "light";
 
-            if (savedTheme === "dark") 
-            {
-                body.style.backgroundColor = "black";
+            if (savedTheme === "dark") {
+                body.style.backgroundColor = "#12172b"; 
                 body.style.color = "white";
                 modeBtn.innerHTML = "🌞"; 
-            } 
-            else
-            {
-                body.style.backgroundColor = "white";
-                body.style.color = "black";
+            } else {
+                body.style.backgroundColor = "#e3f2fd"; 
+                body.style.color = "1e3a8a";
                 modeBtn.innerHTML = "🌙";
             }
         };
+
+        const visualizer = document.getElementById("visualizer");
+
+        audio.addEventListener("play", () => {
+            visualizer.style.animation = "pulse 1.5s infinite";
+        });
+        audio.addEventListener("pause", () => {
+            visualizer.style.animation = "none";
+        });
+
     </script>
 </body>
 </html>
 
-
-<!-- Implementation description
-
-1.Firstly i had added one toggle button which on click will change the color of body => black(moon) /white(sun).
-2.one paragraphy with id=notification which suggest the user if music will not play automatically => then anywhere in body it will start.
-3.their is option to select the song from multiple songs.
-4.controls button are added play/pause and one range to increase the volume of song (0-1).
-5.functions to playMusic() .pauseMusic() ,changeSong().
-6.saved the theme which was selected last time on window load. 
-
-Challenges i faced
-
-to store the theme on window load
--->
